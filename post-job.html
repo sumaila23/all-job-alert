@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post a Job - All Job Alert SL</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>All Job Alert SL</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="post-job.html">Post a job</a>
+    </nav>
+  </header>
+  <main>
+
+    <h2>Post a job</h2>
+<p>Fill in the details below. Your job will be reviewed before it goes live.</p>
+
+<form>
+  <label for="title">Job title</label>
+  <input type="text" id="title" name="title" required>
+
+  <label for="company">Company name</label>
+  <input type="text" id="company" name="company" required>
+
+  <label for="district">District</label>
+  <select id="district" name="district" required>
+    <option value="">Select a district</option>
+    <option value="Bo">Bo</option>
+    <option value="Bombali">Bombali</option>
+    <option value="Bonthe">Bonthe</option>
+    <option value="Falaba">Falaba</option>
+    <option value="Kailahun">Kailahun</option>
+    <option value="Kambia">Kambia</option>
+    <option value="Karene">Karene</option>
+    <option value="Kenema">Kenema</option>
+    <option value="Koinadugu">Koinadugu</option>
+    <option value="Kono">Kono</option>
+    <option value="Moyamba">Moyamba</option>
+    <option value="Port Loko">Port Loko</option>
+    <option value="Pujehun">Pujehun</option>
+    <option value="Tonkolili">Tonkolili</option>
+    <option value="Western Area Rural">Western Area Rural</option>
+    <option value="Western Area Urban">Western Area Urban</option>
+    <option value="Nationwide">Nationwide</option>
+    <option value="Remote">Remote</option>
+  </select>
+
+  <label for="city">City or town</label>
+  <input type="text" id="city" name="city">
+
+  <label for="type">Job type</label>
+  <select id="type" name="type" required>
+    <option value="">Select a type</option>
+    <option value="Full-time">Full-time</option>
+    <option value="Part-time">Part-time</option>
+    <option value="Contract">Contract</option>
+    <option value="Internship">Internship</option>
+  </select>
+
+  <label for="description">Description</label>
+  <textarea id="description" name="description" rows="5" required></textarea>
+
+  <label for="deadline">Application deadline</label>
+  <input type="date" id="deadline" name="deadline" required>
+
+  <label for="apply">How to apply (email, phone, or link)</label>
+  <input type="text" id="apply" name="apply" required>
+
+  <label for="flyer">Job flyer (optional)</label>
+  <input type="file" id="flyer" accept="image/*">
+
+  <button type="submit">Submit for review</button>
+</form>
+
+<footer>
+    <p>Never pay money to apply for a job.</p>
+    <p><a href="https://whatsapp.com/channel/0029VbBJVuP2Jl8JILdjWR0U">Join our WhatsApp channel</a></p>
+    <p>&copy; 2026 All Job Alert SL</p>
+  </footer>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/post-job.js"></script>
+
+</body>
+</html>
