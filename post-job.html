@@ -19,10 +19,21 @@
 </header>
   <main>
 
+    <p class="welcome-msg">Welcome! Post your vacancy and reach thousands of job seekers.</p>
+
     <h2>Post a job</h2>
 <p>Fill in the details below. Your job will be reviewed before it goes live.</p>
 
 <form>
+
+<label for="category">Listing type</label>
+<select id="category" name="category" required>
+  <option value="Job Vacancy">Job Vacancy</option>
+  <option value="Scholarship">Scholarship</option>
+  <option value="Training">Training</option>
+  <option value="Workshop">Workshop</option>
+</select>
+
   <label for="title">Job title</label>
   <input type="text" id="title" name="title" required>
 

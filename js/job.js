@@ -24,25 +24,27 @@ async function loadJob() {
     .eq("id", jobId)
     .single();
 
-    const applyLink = buildApplyLink(data.how_to_apply);
-    
   if (error || !data) {
+    console.error(error);
     container.innerHTML = "<p>Job not found.</p>";
     return;
   }
 
   document.title = data.title + " - All Job Alert SL";
-  
-// flyer section//
+
   const flyerHtml = data.image_url
-  ? `<img src="${data.image_url}" alt="Job flyer" class="job-flyer">`
-  : "";
+    ? `<img src="${data.image_url}" alt="Job flyer" class="job-flyer">`
+    : "";
 
-container.innerHTML = `
-  ${flyerHtml}
-  <h2>${data.title}</h2>
-  <p class="job-meta">${data.company} · ${data.city}, ${data.district}</p>
+  const applyLink = buildApplyLink(data.how_to_apply);
 
+  const shareText = encodeURIComponent(`${data.title} at ${data.company} - ${data.district}\n\nSee full details and apply here:\n${window.location.href}`);
+  const whatsappLink = `https://wa.me/?text=${shareText}`;
+
+  container.innerHTML = `
+    ${flyerHtml}
+    <h2>${data.title}</h2>
+    <p class="job-meta">${data.company} · ${data.city}, ${data.district}</p>
 
     <ul class="job-facts">
       <li>${data.type}</li>
@@ -55,7 +57,8 @@ container.innerHTML = `
     <h3>How to apply</h3>
     <p>${data.how_to_apply}</p>
 
-   <a href="${applyLink.href}" class="apply-btn">${applyLink.label}</a>
+    <a href="${applyLink.href}" class="apply-btn">${applyLink.label}</a>
+    <a href="${whatsappLink}" target="_blank" class="share-btn">Share on WhatsApp</a>
   `;
 }
 
