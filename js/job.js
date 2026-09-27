@@ -38,7 +38,8 @@ async function loadJob() {
 
   const applyLink = buildApplyLink(data.how_to_apply);
 
-  const shareText = encodeURIComponent(`${data.title} at ${data.company} - ${data.district}\n\nSee full details and apply here:\n${window.location.href}`);
+  const shareUrl = `${window.location.origin}/share/${jobId}`;
+  const shareText = encodeURIComponent(`${data.title} at ${data.company} - ${data.district}\n\nSee full details and apply here:\n${shareUrl}`);
   const whatsappLink = `https://wa.me/?text=${shareText}`;
 
   container.innerHTML = `

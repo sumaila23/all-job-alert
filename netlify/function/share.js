@@ -1,0 +1,73 @@
+const SUPABASE_URL = "https://ynstltrzsjdmcmqgchgz.supabase.co";
+const SUPABASE_KEY = "sb_publishable_YXrKfPSCSZI6--FWXmH21w_Vc7zFPgp";
+const SITE_URL = "https://all-job-alert-sl.netlify.app";
+const FALLBACK_IMAGE = SITE_URL + "/image/logo-banner.png";
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+exports.handler = async function (event) {
+  const id = event.queryStringParameters.id;
+  const realPageUrl = id ? `${SITE_URL}/job.html?id=${id}` : `${SITE_URL}/index.html`;
+
+  let title = "All Job Alert SL";
+  let description = "Sierra Leone's job and opportunity platform — jobs, scholarships, training, and workshops in every district.";
+  let image = FALLBACK_IMAGE;
+  let shareUrl = `${SITE_URL}/share/${id || ""}`;
+
+  if (id) {
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/jobs?id=eq.${id}&select=*`,
+        { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+      );
+      const rows = await res.json();
+      const job = rows[0];
+
+      if (job) {
+        title = `${job.title} — ${job.company}`;
+        description = (job.description || "").slice(0, 160);
+        if (job.image_url) image = job.image_url;
+      }
+    } catch (err) {
+      // fall through to defaults below
+    }
+  }
+
+  title = escapeHtml(title);
+  description = escapeHtml(description);
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${title}</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="All Job Alert SL">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${description}">
+<meta property="og:image" content="${image}">
+<meta property="og:url" content="${shareUrl}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${description}">
+<meta name="twitter:image" content="${image}">
+<meta http-equiv="refresh" content="0;url=${realPageUrl}">
+<script>window.location.replace("${realPageUrl}");</script>
+</head>
+<body>
+<p>Redirecting to <a href="${realPageUrl}">${title}</a>…</p>
+</body>
+</html>`;
+
+  return {
+    statusCode: 200,
+    headers: { "Content-Type": "text/html; charset=utf-8" },
+    body: html
+  };
+};
