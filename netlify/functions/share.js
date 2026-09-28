@@ -18,29 +18,34 @@ exports.handler = async function (event) {
   let title = "All Job Alert SL";
   let description = "Sierra Leone's job and opportunity platform — jobs, scholarships, training, and workshops in every district.";
   let image = FALLBACK_IMAGE;
-  let shareUrl = `${SITE_URL}/share/${id || ""}`;
+  const shareUrl = `${SITE_URL}/share/${id || ""}`;
 
   if (id) {
     try {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/jobs?id=eq.${id}&select=*`,
-        { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+        `${SUPABASE_URL}/rest/v1/jobs?id=eq.${encodeURIComponent(id)}&select=*`,
+        { headers: { apikey: SUPABASE_KEY } }
       );
       const rows = await res.json();
-      const job = rows[0];
 
-      if (job) {
+      if (!res.ok) {
+        console.error("Supabase error:", res.status, JSON.stringify(rows));
+      } else if (!rows.length) {
+        console.error("No job found for id:", id);
+      } else {
+        const job = rows[0];
         title = `${job.title} — ${job.company}`;
         description = (job.description || "").slice(0, 160);
         if (job.image_url) image = job.image_url;
       }
     } catch (err) {
-      // fall through to defaults below
+      console.error("Fetch failed:", err.message);
     }
   }
 
   title = escapeHtml(title);
   description = escapeHtml(description);
+  image = escapeHtml(image);
 
   const html = `<!DOCTYPE html>
 <html lang="en">
