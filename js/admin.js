@@ -76,3 +76,36 @@ async function updateStatus(id, newStatus) {
 }
 
 loadPending();
+
+const feedbackHeading = document.getElementById("feedback-heading");
+const feedbackList = document.getElementById("feedback-list");
+
+async function loadFeedback() {
+  const { data, error } = await supabaseClient
+    .from("feedback")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    feedbackList.innerHTML = "<p>Could not load feedback.</p>";
+    console.error(error);
+    return;
+  }
+
+  feedbackHeading.textContent = `Feedback (${data.length})`;
+
+  if (data.length === 0) {
+    feedbackList.innerHTML = "<p>No feedback yet.</p>";
+    return;
+  }
+
+  feedbackList.innerHTML = data.map(fb => `
+    <article class="admin-card">
+      <p><strong>${fb.name || "Anonymous"}</strong> ${fb.email ? `· ${fb.email}` : ""}</p>
+      <p><span class="job-type">${fb.reason}</span></p>
+      <p>${fb.message}</p>
+    </article>
+  `).join("");
+}
+
+loadFeedback();

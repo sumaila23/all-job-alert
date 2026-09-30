@@ -48,7 +48,7 @@ function renderJobs() {
     <span class="job-category">${job.category}</span>
     <h3>${job.title}</h3>
     <p>${job.company} · ${job.city}, ${job.district}</p>
-    <p><span class="job-type">${job.type}</span> Closes ${job.deadline}</p>
+    <p><span class="job-type">${job.type}</span> ${job.deadline ? `Closes ${job.deadline}` : "No closing date"}</p>
     <a href="job.html?id=${job.id}">View details</a>
   </article>
 `).join("");

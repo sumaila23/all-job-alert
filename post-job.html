@@ -67,19 +67,22 @@
   <input type="text" id="city" name="city">
 
   <label for="type">Job type</label>
-  <select id="type" name="type" required>
-    <option value="">Select a type</option>
-    <option value="Full-time">Full-time</option>
-    <option value="Part-time">Part-time</option>
-    <option value="Contract">Contract</option>
-    <option value="Internship">Internship</option>
-  </select>
+<select id="type" name="type" required>
+  <option value="">Select a type</option>
+  <option value="Full-time">Full-time</option>
+  <option value="Part-time">Part-time</option>
+  <option value="Contract">Contract</option>
+  <option value="Internship">Internship</option>
+  <option value="Other">Other</option>
+</select>
+
+<input type="text" id="type-other" placeholder="Please specify the job type" style="display:none;" required>
 
   <label for="description">Description</label>
   <textarea id="description" name="description" rows="5" required></textarea>
 
-  <label for="deadline">Application deadline</label>
-  <input type="date" id="deadline" name="deadline" required>
+  <label for="deadline">Application deadline (optional)</label>
+  <input type="date" id="deadline" name="deadline">
 
   <label for="apply">How to apply (email, phone, or link)</label>
   <input type="text" id="apply" name="apply" required>

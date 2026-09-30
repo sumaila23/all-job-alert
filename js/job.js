@@ -49,7 +49,7 @@ async function loadJob() {
 
     <ul class="job-facts">
       <li>${data.type}</li>
-      <li>Closes ${data.deadline}</li>
+      <li>${data.deadline ? `Closes ${data.deadline}` : "No closing date"}</li>
     </ul>
 
     <h3>About the job</h3>

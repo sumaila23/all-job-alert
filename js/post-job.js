@@ -1,5 +1,20 @@
 const form = document.querySelector("form");
 
+const typeSelect = document.getElementById("type");
+const typeOther = document.getElementById("type-other");
+
+typeSelect.addEventListener("change", function () {
+  if (typeSelect.value === "Other") {
+    typeOther.style.display = "block";
+    typeOther.setAttribute("required", "true");
+  } else {
+    typeOther.style.display = "none";
+    typeOther.removeAttribute("required");
+    typeOther.value = "";
+  }
+});
+
+
 function addWatermark(file) {
   return new Promise((resolve) => {
     const img = new Image();
@@ -65,8 +80,8 @@ form.addEventListener("submit", async function (event) {
     company: document.getElementById("company").value,
     district: document.getElementById("district").value,
     city: document.getElementById("city").value,
-    type: document.getElementById("type").value,
-    deadline: document.getElementById("deadline").value,
+    type: typeSelect.value === "Other" ? typeOther.value : typeSelect.value,
+    deadline: document.getElementById("deadline").value || null,
     description: document.getElementById("description").value,
     how_to_apply: document.getElementById("apply").value,
     image_url: imageUrl,

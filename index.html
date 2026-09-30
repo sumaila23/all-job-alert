@@ -53,12 +53,15 @@
   <option value="Nationwide">Nationwide</option>
   <option value="Remote">Remote</option>
 </select>
+
 <select id="category-filter">
   <option value="">All types</option>
- <option value="Job Vacancy">Job Vacancies</option>
-  <option value="scholarship">Scholarships</option>
-  <option value="training">Training</option>
-  <option value="workshop">Workshops</option>
+  <option value="Job Vacancy">Job Vacancies</option>
+  <option value="Scholarship">Scholarships</option>
+  <option value="Training">Training</option>
+  <option value="Workshop">Workshops</option>
+  <option value="Masterclass">Masterclasses</option>
+  <option value="Seminar">Seminars</option>
 </select>
 
 <h2>Latest jobs</h2>
@@ -82,6 +85,36 @@
 </section>
 
 
+
+<section id="feedback-section">
+  <h2>Send us feedback</h2>
+  <p>Notice something that needs fixing, or have a suggestion? Let us know.</p>
+
+  <form id="feedback-form">
+    <label for="fb-name">Your name (optional)</label>
+    <input type="text" id="fb-name">
+
+    <label for="fb-email">Your email (optional, if you'd like a reply)</label>
+    <input type="email" id="fb-email">
+
+    <label for="fb-reason">What's this about?</label>
+    <select id="fb-reason" required>
+      <option value="">Select a reason</option>
+      <option value="Bug or issue">Bug or issue</option>
+      <option value="Suggestion">Suggestion</option>
+      <option value="Complaint">Complaint</option>
+      <option value="General feedback">General feedback</option>
+    </select>
+
+    <label for="fb-message">Your message</label>
+    <textarea id="fb-message" rows="4" required></textarea>
+
+    <button type="submit">Send feedback</button>
+    <p id="feedback-status"></p>
+  </form>
+</section>
+
+
 <footer>
   <p>Never pay money to apply for a job.</p>
   <p><a href="https://whatsapp.com/channel/0029VbBJVuP2Jl8JILdjWR0U">Join our WhatsApp channel</a></p>
@@ -92,7 +125,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
 <script src="js/app.js"></script>
-    
+<script src="js/feedback.js"></script>
 
 </body>
 </html>
