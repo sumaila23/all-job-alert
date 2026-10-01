@@ -18,6 +18,14 @@
   <a href="about.html">About</a>
 </nav>
 </header>
+<section class="stats-section">
+  <div>
+    <span class="stat-number" data-target="1000">0</span>
+    <p>people in our WhatsApp channel finding jobs, scholarships, training & more</p>
+  </div>
+</section>
+
+
   <main>
 
     <p class="welcome-msg">Welcome! Post your vacancy and reach thousands of job seekers.</p>
@@ -64,7 +72,13 @@
     <option value="Western Area Urban">Western Area Urban</option>
     <option value="Nationwide">Nationwide</option>
     <option value="Remote">Remote</option>
+    <option value="Other">Other / Multiple districts</option>
   </select>
+
+  <div id="other-district-wrap" style="display:none;">
+   <label for="other-district">Enter district(s)</label>
+   <input type="text" id="other-district" placeholder="e.g. Bo, Kenema, Freetown">
+   </div>
 
   <label for="city">City or town</label>
   <input type="text" id="city" name="city">
@@ -106,6 +120,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
 <script src="js/post-job.js"></script>
+<script src="js/animations.js"></script>
 
 </body>
 </html>

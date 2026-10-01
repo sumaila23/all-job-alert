@@ -599,3 +599,40 @@ form select {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(-20px, -15px); }
 }
+
+
+/* Logo entrance animation */
+.logo {
+  animation: logoPop 0.9s ease-out;
+}
+
+@keyframes logoPop {
+  0% { opacity: 0; transform: scale(0.4) rotate(-15deg); }
+  70% { opacity: 1; transform: scale(1.1) rotate(5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* WhatsApp stats counter */
+.stats-section {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0f766e 0%, #2563eb 100%);
+  color: white;
+  text-align: center;
+  max-width: 420px;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.stats-section p {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  color: #e0f2fe;
+}

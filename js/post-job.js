@@ -1,3 +1,18 @@
+const districtSelect = document.getElementById("district");
+const otherDistrictWrap = document.getElementById("other-district-wrap");
+const otherDistrictInput = document.getElementById("other-district");
+
+districtSelect.addEventListener("change", function () {
+  if (districtSelect.value === "Other") {
+    otherDistrictWrap.style.display = "block";
+    otherDistrictInput.required = true;
+  } else {
+    otherDistrictWrap.style.display = "none";
+    otherDistrictInput.required = false;
+    otherDistrictInput.value = "";
+  }
+});
+
 const form = document.querySelector("form");
 
 const typeSelect = document.getElementById("type");
