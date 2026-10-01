@@ -11,19 +11,36 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;");
 }
 
+// Gets the job ID from ?id=28 first, then falls back to the URL path (/share/28)
+function getId(event) {
+  const query = event.queryStringParameters || {};
+  if (query.id) return String(query.id);
+
+  const url = event.rawUrl || event.path || "";
+  const parts = url.split("?")[0].split("/").filter(Boolean);
+  const last = parts.length ? parts[parts.length - 1] : "";
+  return last === "share" ? "" : last;
+}
+
 exports.handler = async function (event) {
-  const id = event.queryStringParameters.id;
-  const realPageUrl = id ? `${SITE_URL}/job.html?id=${id}` : `${SITE_URL}/index.html`;
+  const id = getId(event);
+  console.log("share function got id:", id, "path:", event.path, "rawUrl:", event.rawUrl);
+
+  const safeId = id ? encodeURIComponent(id) : "";
+  const realPageUrl = id
+    ? `${SITE_URL}/job.html?id=${safeId}`
+    : `${SITE_URL}/index.html`;
 
   let title = "All Job Alert SL";
-  let description = "Sierra Leone's job and opportunity platform — jobs, scholarships, training, and workshops in every district.";
+  let description =
+    "Sierra Leone's job and opportunity platform — jobs, scholarships, training, and workshops in every district.";
   let image = FALLBACK_IMAGE;
-  const shareUrl = `${SITE_URL}/share/${id || ""}`;
+  const shareUrl = `${SITE_URL}/share/${safeId}`;
 
   if (id) {
     try {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/jobs?id=eq.${encodeURIComponent(id)}&select=*`,
+        `${SUPABASE_URL}/rest/v1/jobs?id=eq.${safeId}&select=*`,
         { headers: { apikey: SUPABASE_KEY } }
       );
       const rows = await res.json();
