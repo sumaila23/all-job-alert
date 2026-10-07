@@ -15,6 +15,20 @@ districtSelect.addEventListener("change", function () {
 
 const form = document.querySelector("form");
 
+
+emailjs.init("PxvEp9YtkRCAnFH1-");
+
+function notifyAdmin(job) {
+  emailjs.send("service_8u6lj7r", "template_o25z7i8", {
+    job_title: job.title,
+    job_company: job.company,
+    job_category: job.category,
+    job_district: job.district
+  }).catch(function (err) {
+    console.error("Email notification failed:", err);
+  });
+}
+
 const typeSelect = document.getElementById("type");
 const typeOther = document.getElementById("type-other");
 
@@ -108,8 +122,10 @@ form.addEventListener("submit", async function (event) {
   if (error) {
     alert("Something went wrong. Please try again.");
     console.error(error);
+    
   } else {
-    alert("Your job has been submitted for review. Thank you!");
-    form.reset();
-  }
+  notifyAdmin(newJob);
+  alert("Your job has been submitted for review. Thank you!");
+  form.reset();
+}
 });
