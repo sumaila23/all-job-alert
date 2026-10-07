@@ -1,0 +1,21 @@
+{
+  "name": "All Job Alert SL",
+  "short_name": "JobAlertSL",
+  "description": "Sierra Leone's job and opportunity platform",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "image/favicon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "image/logo-header.png",
+      "sizes": "160x160",
+      "type": "image/png"
+    }
+  ]
+}

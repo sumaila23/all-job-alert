@@ -59,6 +59,10 @@ districtBox.addEventListener("change", renderJobs);
 categoryBox.addEventListener("change", renderJobs);
 loadJobs();
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js");
+}
+
 document.addEventListener("contextmenu", function (event) {
   if (event.target.closest(".job-card")) {
     event.preventDefault();
