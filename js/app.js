@@ -6,11 +6,20 @@ const jobsHeading = document.querySelector("main h2");
 
 let allJobs = [];
 
+function escapeHtml(text) {
+  return String(text ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 async function loadJobs() {
   const { data, error } = await supabaseClient
     .from("jobs")
     .select("*")
-        .eq("status", "approved")
+    .eq("status", "approved")
     .eq("scope", "national")
     .order("created_at", { ascending: false });
 
@@ -43,26 +52,22 @@ function renderJobs() {
     return;
   }
 
- jobsList.innerHTML = filtered.map(job => `
-  <article class="job-card">
-    ${job.image_url ? `<img src="${job.image_url}" alt="Flyer" class="job-thumb">` : ""}
-    <span class="job-category">${job.category}</span>
-    <h3>${job.title}</h3>
-    <p>${job.company} · ${job.city}, ${job.district}</p>
-    <p><span class="job-type">${job.type}</span> ${job.deadline ? `Closes ${job.deadline}` : "No closing date"}</p>
-    <a href="job.html?id=${job.id}">View details</a>
-  </article>
-`).join("");
+  jobsList.innerHTML = filtered.map(job => `
+    <article class="job-card">
+      ${job.image_url ? `<img src="${escapeHtml(job.image_url)}" alt="Flyer" class="job-thumb">` : ""}
+      <span class="job-category">${escapeHtml(job.category)}</span>
+      <h3>${escapeHtml(job.title)}</h3>
+      <p>${escapeHtml(job.company)} · ${escapeHtml(job.city)}, ${escapeHtml(job.district)}</p>
+      <p><span class="job-type">${escapeHtml(job.type)}</span> ${job.deadline ? `Closes ${escapeHtml(job.deadline)}` : "No closing date"}</p>
+      <a href="job.html?id=${job.id}">View details</a>
+    </article>
+  `).join("");
 }
 
 searchBox.addEventListener("input", renderJobs);
 districtBox.addEventListener("change", renderJobs);
 categoryBox.addEventListener("change", renderJobs);
 loadJobs();
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js");
-}
 
 document.addEventListener("contextmenu", function (event) {
   if (event.target.closest(".job-card")) {
