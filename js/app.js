@@ -10,7 +10,8 @@ async function loadJobs() {
   const { data, error } = await supabaseClient
     .from("jobs")
     .select("*")
-    .eq("status", "approved")
+        .eq("status", "approved")
+    .eq("scope", "national")
     .order("created_at", { ascending: false });
 
   if (error) {

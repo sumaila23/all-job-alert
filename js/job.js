@@ -2,14 +2,24 @@ const params = new URLSearchParams(window.location.search);
 const jobId = params.get("id");
 const container = document.getElementById("job-details");
 
+function escapeHtml(text) {
+  return String(text ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function buildApplyLink(applyText) {
-  if (applyText.includes("@")) {
-    return { href: "mailto:" + applyText, label: "Apply by Email" };
+  const text = applyText.trim();
+  if (text.startsWith("http")) {
+    return { href: text, label: "Apply Now", external: true };
   }
-  if (applyText.startsWith("http")) {
-    return { href: applyText, label: "Apply Now" };
+  if (text.includes("@")) {
+    return { href: "mailto:" + text, label: "Apply by Email", external: false };
   }
-  return { href: "tel:" + applyText, label: "Apply by Phone" };
+  return { href: "tel:" + text, label: "Apply by Phone", external: false };
 }
 
 async function loadJob() {
@@ -32,33 +42,46 @@ async function loadJob() {
 
   document.title = data.title + " - All Job Alert SL";
 
+  const isRemote = data.scope === "remote";
+
   const flyerHtml = data.image_url
-    ? `<img src="${data.image_url}" alt="Job flyer" class="job-flyer">`
+    ? `<img src="${escapeHtml(data.image_url)}" alt="Job flyer" class="job-flyer">`
     : "";
 
-  const applyLink = buildApplyLink(data.how_to_apply);
+  const backLink = isRemote
+    ? `<p><a href="remote.html">← Back to remote jobs</a></p>`
+    : "";
 
-  const shareUrl = `${window.location.origin}/share/${jobId}?v=${Date.now()}`;
+  const locationText = isRemote
+    ? `${escapeHtml(data.city)} (Remote)`
+    : `${escapeHtml(data.city)}, ${escapeHtml(data.district)}`;
+
+  const applyLink = buildApplyLink(data.how_to_apply);
+  const applyTarget = applyLink.external ? ' target="_blank" rel="noopener noreferrer"' : "";
+
+  const shareUrl = `${window.location.origin}/share/${jobId}`;
   const shareText = encodeURIComponent(`${data.title} at ${data.company} - ${data.district}\n\nSee full details and apply here:\n${shareUrl}`);
   const whatsappLink = `https://wa.me/?text=${shareText}`;
 
   container.innerHTML = `
+    ${backLink}
     ${flyerHtml}
-    <h2>${data.title}</h2>
-    <p class="job-meta">${data.company} · ${data.city}, ${data.district}</p>
+    <h2>${escapeHtml(data.title)}</h2>
+    <p class="job-meta">${escapeHtml(data.company)} · ${locationText}</p>
 
     <ul class="job-facts">
-      <li>${data.type}</li>
-      <li>${data.deadline ? `Closes ${data.deadline}` : "No closing date"}</li>
+      <li>${escapeHtml(data.type)}</li>
+      <li>${data.deadline ? `Closes ${escapeHtml(data.deadline)}` : "No closing date"}</li>
+      ${data.source ? `<li>Source: ${escapeHtml(data.source)}</li>` : ""}
     </ul>
 
     <h3>About the job</h3>
-    <p>${data.description}</p>
+    <p class="job-description">${escapeHtml(data.description)}</p>
 
     <h3>How to apply</h3>
-    <p>${data.how_to_apply}</p>
+    <p class="job-apply-text">${escapeHtml(data.how_to_apply)}</p>
 
-    <a href="${applyLink.href}" class="apply-btn">${applyLink.label}</a>
+    <a href="${escapeHtml(applyLink.href)}"${applyTarget} class="apply-btn">${applyLink.label}</a>
     <a href="${whatsappLink}" target="_blank" class="share-btn">Share on WhatsApp</a>
   `;
 }

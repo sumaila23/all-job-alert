@@ -636,3 +636,10 @@ form select {
   font-size: 0.95rem;
   color: #e0f2fe;
 }
+
+/* Long descriptions: keep line breaks, wrap long links */
+.job-description,
+.job-apply-text {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}

@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - All Job Alert SL</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
- <header>
+<header>
   <div class="brand">
     <img src="image/logo-header.png" alt="All Job Alert SL logo" class="logo">
     <h1>All Job Alert SL Admin</h1>
@@ -17,27 +16,73 @@
   <button id="logout-btn">Log out</button>
 </header>
 
-  <main>
+<main>
+
+  <h2>Post a remote job</h2>
+
+  <form id="remote-form">
+    <label for="r-title">Job title</label>
+    <input type="text" id="r-title" required>
+
+    <label for="r-company">Company name</label>
+    <input type="text" id="r-company" required>
+
+    <label for="r-region">Who can apply?</label>
+    <select id="r-region" required>
+      <option value="Worldwide">Worldwide</option>
+      <option value="Africa only">Africa only</option>
+      <option value="West Africa only">West Africa only</option>
+      <option value="Sierra Leone only">Sierra Leone only</option>
+      <option value="Other">Other (type it below)</option>
+    </select>
+    <input type="text" id="r-region-other" placeholder="Type the region or country requirement" style="display:none;">
+
+    <label for="r-type">Job type</label>
+    <select id="r-type" required>
+      <option value="">Select a type</option>
+      <option value="Full-time">Full-time</option>
+      <option value="Part-time">Part-time</option>
+      <option value="Contract">Contract</option>
+      <option value="Freelance">Freelance</option>
+      <option value="Internship">Internship</option>
+    </select>
+
+    <label for="r-description">Description (write it in your own words, include working hours / time zone)</label>
+    <textarea id="r-description" rows="8" required></textarea>
+
+    <label for="r-deadline">Application deadline (optional)</label>
+    <input type="date" id="r-deadline">
+
+    <label for="r-apply">Direct apply link (the company's own page, or an email)</label>
+    <input type="text" id="r-apply" required>
+
+    <label for="r-source">Source (where you found it, e.g. LinkedIn)</label>
+    <input type="text" id="r-source">
+
+    <button type="submit">Post remote job</button>
+    <p id="remote-status"></p>
+  </form>
+
+  <h2 id="remote-list-heading">Live remote jobs</h2>
+  <section id="remote-list">
+    <p>Loading...</p>
+  </section>
 
   <h2 id="pending-heading">Pending jobs</h2>
+  <section id="pending-jobs">
+    <p>Loading...</p>
+  </section>
 
-<section id="pending-jobs">
-  <p>Loading...</p>
-</section>
+  <h2 id="feedback-heading">Feedback</h2>
+  <section id="feedback-list">
+    <p>Loading...</p>
+  </section>
 
-<h2 id="feedback-heading">Feedback</h2>
+</main>
 
-<section id="feedback-list">
-  <p>Loading...</p>
-</section>
-
-  </main>
-  <footer>
-    <p>&copy; 2026 All Job Alert SL</p>
-  </footer>
-  </main>
-
-
+<footer>
+  <p>&copy; 2026 All Job Alert SL</p>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
